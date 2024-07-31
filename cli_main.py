@@ -11,7 +11,7 @@ from tk_uploader.main_chrome import tiktok_setup, TiktokVideo
 from utils.base_social_media import get_supported_social_media, get_cli_action, SOCIAL_MEDIA_DOUYIN, \
     SOCIAL_MEDIA_TENCENT, SOCIAL_MEDIA_TIKTOK
 from utils.constant import TencentZoneTypes
-from utils.files_times import get_title_and_hashtags
+from utils.files_times import get_title_and_hashtags2
 
 
 def parse_schedule(schedule_raw):
@@ -64,7 +64,7 @@ async def main():
         elif args.platform == SOCIAL_MEDIA_TENCENT:
             await weixin_setup(str(account_file), handle=True)
     elif args.action == 'upload':
-        title, tags = get_title_and_hashtags(args.video_file)
+        title, tags = get_title_and_hashtags2(args.video_file)
         video_file = args.video_file
 
         if args.publish_type == 0:

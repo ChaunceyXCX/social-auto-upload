@@ -9,7 +9,7 @@ social-auto-upload This project aims to automate the posting of videos to variou
 - 中国主流社交媒体平台：
   - [x] 抖音
   - [x] 视频号
-  - [x] bilibili
+    - [x] bilibili                                       a  z
   - [x] 小红书
   - [ ] 快手
 

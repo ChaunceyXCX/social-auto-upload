@@ -3,7 +3,8 @@ from datetime import timedelta
 from datetime import datetime
 from pathlib import Path
 
-from conf import BASE_DIR
+from conf import BASE_DIR, DAY_UPLOAD_COUNT
+from utils.log import api_logger
 
 
 def get_absolute_path(relative_path: str, base_dir: str = None) -> str:
@@ -36,6 +37,42 @@ def get_title_and_hashtags(filename):
     hashtags = splite_str[1].replace("#", "").split(" ")
 
     return title, hashtags
+
+
+def get_title_and_hashtags2(filename):
+    """
+  获取视频标题和 hashtag
+
+  Args:
+    filename: 视频文件名
+
+  Returns:
+    视频标题和 hashtag 列表
+  """
+    api_logger.info(filename)
+    # 获取标题和 hashtag
+    # splite_str = filename.strip().split("")
+    # title = splite_str[0]
+    # hashtags = splite_str[1].replace("#", "").split(" ")
+    title = 'I want to kiss you'
+    hashtags = ['大长腿','完美身材' ,'御姐' ,'扭一扭' ,'穿衣自由' ,'辣妈']
+    return title, hashtags
+
+
+# 获取指定路径下的所有MP4文件
+def get_videos(videopath):
+    # 创建Path对象
+    path = Path(videopath)
+    # 使用rglob()递归地获取所有.mp4文件，并按文件名升序排列
+    mp4_files = [file for file in path.iterdir() if file.is_file() and file.suffix.lower() == '.mp4']
+    mp4_files = sorted(mp4_files, key=lambda file: file.name)
+    api_logger.info(f"发现 {len(mp4_files)} 个 视频 在 {path}")
+    api_logger.info(f"视频列表：{mp4_files}")
+    if DAY_UPLOAD_COUNT <= len(mp4_files):
+        api_logger.info(f"视频列表中最多上传 {DAY_UPLOAD_COUNT} 个视频，将上传 {DAY_UPLOAD_COUNT} 个视频, 视频文件为：{mp4_files[DAY_UPLOAD_COUNT-1].name}")
+        return mp4_files[DAY_UPLOAD_COUNT-1]
+    else:
+        return None
 
 
 def generate_schedule_time_next_day(total_videos, videos_per_day, daily_times=None, timestamps=False, start_days=0):
